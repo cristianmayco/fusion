@@ -47,10 +47,26 @@ class Employee(Base):
     name = models.CharField('Name', max_length=100)
     occupation = models.ForeignKey('core.Occupation', verbose_name='Occupation', on_delete=models.CASCADE)
     bio = models.TextField('Bio', max_length=255)
-    photo = StdImageField('Photo', upload_to=get_file_path, variations={'thumb': {'width': 480, 'height': 480, 'crop': True}})
+    photo = StdImageField('Photo', upload_to=get_file_path,
+                          variations={'thumb': {'width': 480, 'height': 480, 'crop': True}})
     facebook = models.CharField('Facebook', max_length=100, default='#')
     twitter = models.CharField('Twitter', max_length=100, default='#')
     instagram = models.CharField('Instagram', max_length=100, default='#')
+
+    def __str__(self):
+        return self.name
+
+
+class Feature(Base):
+    ICON_CHOICES = (
+        ('lni-cog', 'Gear'),
+        ('lni-leaf', 'Leaf'),
+        ('lni-laptop-phone', 'Mobile'),
+        ('lni-rocket', 'Rocket')
+    )
+    name = models.CharField('Name', max_length=100)
+    description = models.TextField('Description', max_length=255)
+    icon = models.CharField('Icon', max_length=25, choices=ICON_CHOICES)
 
     def __str__(self):
         return self.name
